@@ -1,7 +1,9 @@
 
 module DocumentAbove.Capitalise where
 
-import Data.Char (toUpper)
+import           Data.Bifunctor (first)
+import           Data.Char (toUpper)
+import qualified Data.Text as T
 
 -- | The 'capitalise' function capitalises on your losses.
 --   But it also capitalises a word.
@@ -24,3 +26,7 @@ import Data.Char (toUpper)
 capitalise :: String -> String
 capitalise []       = []
 capitalise (c : cs) = toUpper c : cs
+
+-- | 'capitalise' specialised to 'T.Text' using the 'first' function from "Data.Bifunctor".
+capitaliseT :: T.Text -> T.Text
+capitaliseT = maybe T.empty (uncurry T.cons . first toUpper) . T.uncons
